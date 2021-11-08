@@ -4,14 +4,33 @@ React Native library for WeFitter and Samsung Health
 
 ## Getting started
 
-For all new integrations, access has to be requested from Samsung Health. For information please contact [Nick Bosscher](mailto:nick@wefitter.com). To add developer mode access see [Developer mode](https://developer.samsung.com/health/android/data/guide/dev-mode.html).
+For all new integrations, access has to be requested from Samsung Health. For information please contact [WeFitter API Support](mailto:api-support@wefitter.com).
+
+### Datatypes
+
+During the approval process you will be asked for a list of datatypes. This SDK supports the following datatypes so during the approval process please ask read access for the following:
+
+- Heart rate
+- Height
+- Weight
+- Daily step count trend
+- Sleep stage
+- Exercise
+
+It is possible to request less, but at least one from this list should be requested. The user will not be able to give permission to a datatype if your app isn't approved to access that datatype.
+
+### Developer mode
+
+To add developer mode access after your app has been approved see [Developer mode](https://developer.samsung.com/health/android/data/guide/dev-mode.html).
+
+### Historical data
 
 When the connection has been enabled for the first time it will fetch data of the last 24 hours. Sleep data is an exception to this as it will fetch data since 12pm UTC of the previous day. Further historical data is not available.
 
 ## Installation
 
 ```sh
-yarn add git://github.com/ThunderbyteAI/react-native-wefitter-samsung.git#v0.0.1
+yarn add git://github.com/ThunderbyteAI/react-native-wefitter-samsung.git#v0.0.2
 ```
 
 ## Usage
