@@ -1,6 +1,6 @@
 {
   "name": "react-native-wefitter-samsung",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "React Native library for WeFitter and Samsung Health",
   "private": true,
   "main": "lib/commonjs/index",

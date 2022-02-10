@@ -3,11 +3,13 @@ package com.reactnativewefittersamsung
 import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.wefitter.shealth.WeFitterSHealth
+import com.wefitter.shealth.WeFitterSHealthError
 
 class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
 
   private val weFitter by lazy { WeFitterSHealth(currentActivity!!) }
+  private val errors = mutableMapOf<WeFitterSHealthError.Reason, WeFitterSHealthError>()
 
   override fun getName(): String {
     return "WeFitterSamsung"
@@ -32,11 +34,16 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
           Arguments.createMap().apply { putBoolean("connected", connected) })
       }
 
-      override fun onError(error: String) {
+      override fun onError(error: WeFitterSHealthError) {
+        // save error so we can find it again for `tryToResolve` function
+        errors[error.reason] = error
         sendEvent(
           reactContext,
           "onErrorWeFitterSamsung",
-          Arguments.createMap().apply { putString("error", error) })
+          Arguments.createMap().apply {
+            putString("error", error.reason.message)
+            putBoolean("forUser", error.reason.forUser)
+          })
       }
     }
     val notificationConfig = parseNotificationConfig(config)
@@ -56,6 +63,18 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
   @ReactMethod
   fun isConnected(callback: Callback) {
     callback(weFitter.isConnected())
+  }
+
+  @ReactMethod
+  fun tryToResolveError(reason: String) {
+    // reverse lookup enum by value
+    val map = WeFitterSHealthError.Reason.values().associateBy(WeFitterSHealthError.Reason::message)
+    val enum = map[reason]
+
+    // try to resolve source error
+    errors[enum]?.let {
+      weFitter.tryToResolveError(it)
+    }
   }
 
   private fun parseNotificationConfig(config: ReadableMap): WeFitterSHealth.NotificationConfig {

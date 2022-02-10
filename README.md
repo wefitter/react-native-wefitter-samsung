@@ -1,14 +1,28 @@
 # react-native-wefitter-samsung
 
-React Native library for WeFitter and Samsung Health
+React Native library for integrating WeFitter and Samsung Health into your app.
+
+## Requirements
+
+- Kotlin
+  - See this [guide](https://developer.android.com/kotlin/add-kotlin) on how to add Kotlin support to your app.
+- minSdkVersion 23
+  - See this [link](https://developer.android.com/studio/publish/versioning#minsdkversion) for more information.
 
 ## Getting started
 
-For all new integrations, access has to be requested from Samsung Health. For information please contact [WeFitter API Support](mailto:api-support@wefitter.com).
+For all new integrations, access has to be requested from Samsung Health. The approval process is subject to change at any time. To get started please contact [WeFitter API Support](mailto:api-support@wefitter.com).
+
+You do have to upload an app to the Play Console before your app can be approved. It does not have to be released to the public. Keep the following information on hand during the approval process:
+
+- App application ID
+- SHA-256 signing key certificate (found on Play Console in App integrity section)
+- List of supported countries
+- List of datatypes (see below)
 
 ### Datatypes
 
-During the approval process you will be asked for a list of datatypes. This SDK supports the following datatypes so during the approval process please ask read access for the following:
+During the approval process you will be asked for a list of datatypes. This SDK supports the following datatypes so during the approval process please ask read access for at least the following:
 
 - Heart rate
 - Height
@@ -23,6 +37,8 @@ It is possible to request less, but at least one from this list should be reques
 
 To add developer mode access after your app has been approved see [Developer mode](https://developer.samsung.com/health/android/data/guide/dev-mode.html).
 
+To use Samsung Health without developer mode make sure you build the app in release mode and the application ID and SHA-256 signing key certificate are registered at Samsung Health during the approval process.
+
 ### Historical data
 
 When the connection has been enabled for the first time it will fetch data of the last 24 hours. Sleep data is an exception to this as it will fetch data since 12pm UTC of the previous day. Further historical data is not available.
@@ -30,7 +46,7 @@ When the connection has been enabled for the first time it will fetch data of th
 ## Installation
 
 ```sh
-yarn add git://github.com/ThunderbyteAI/react-native-wefitter-samsung.git#v0.0.2
+yarn add git://github.com/ThunderbyteAI/react-native-wefitter-samsung.git#v1.0.0
 ```
 
 ## Usage
@@ -38,7 +54,11 @@ yarn add git://github.com/ThunderbyteAI/react-native-wefitter-samsung.git#v0.0.2
 Add the following code and change `YOUR_TOKEN` and `YOUR_API_URL`:
 
 ```ts
-import WeFitterSamsung from 'react-native-wefitter-samsung';
+import WeFitterSamsung, {
+  ConfiguredEvent,
+  ConnectedEvent,
+  ErrorEvent,
+} from 'react-native-wefitter-samsung';
 
 // ...
 
@@ -50,20 +70,38 @@ useEffect(() => {
     const emitter = new NativeEventEmitter();
     const configuredListener = emitter.addListener(
       'onConfiguredWeFitterSamsung',
-      (event: { configured: boolean }) =>
+      (event: ConfiguredEvent) =>
         console.log(`WeFitterSamsung configured: ${event.configured}`)
     );
     const connectedListener = emitter.addListener(
       'onConnectedWeFitterSamsung',
-      (event: { connected: boolean }) => {
+      (event: ConnectedEvent) => {
         console.log(`WeFitterSamsung connected: ${event.connected}`);
         setConnected(event.connected);
       }
     );
     const errorListener = emitter.addListener(
       'onErrorWeFitterSamsung',
-      (event: { error: string }) => {
+      (event: ErrorEvent) => {
         console.log(`WeFitterSamsung error: ${event.error}`);
+
+        // `error` can be checked to override specific messages
+        // `forUser` boolean indicates the error requires user interaction
+        if (event.forUser) {
+          Alert.alert('', event.error, [
+            {
+              text: 'OK',
+              onPress: () => {
+                // `tryToResolveError` will guide the user on fixing certain errors
+                // for example:
+                // - link to the app store to install or update Samsung Health
+                // - open Samsung Health to accept privacy policy
+                // - open Settings when Samsung Health needs to be enabled
+                WeFitterSamsung.tryToResolveError(event.error);
+              },
+            },
+          ]);
+        }
       }
     );
 

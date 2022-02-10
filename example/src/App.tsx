@@ -8,7 +8,11 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import WeFitterSamsung from 'react-native-wefitter-samsung';
+import WeFitterSamsung, {
+  ConfiguredEvent,
+  ConnectedEvent,
+  ErrorEvent,
+} from 'react-native-wefitter-samsung';
 
 export default function App() {
   const [connected, setConnected] = useState<boolean>(false);
@@ -19,20 +23,38 @@ export default function App() {
       const emitter = new NativeEventEmitter();
       const configuredListener = emitter.addListener(
         'onConfiguredWeFitterSamsung',
-        (event: { configured: boolean }) =>
+        (event: ConfiguredEvent) =>
           console.log(`WeFitterSamsung configured: ${event.configured}`)
       );
       const connectedListener = emitter.addListener(
         'onConnectedWeFitterSamsung',
-        (event: { connected: boolean }) => {
+        (event: ConnectedEvent) => {
           console.log(`WeFitterSamsung connected: ${event.connected}`);
           setConnected(event.connected);
         }
       );
       const errorListener = emitter.addListener(
         'onErrorWeFitterSamsung',
-        (event: { error: string }) => {
+        (event: ErrorEvent) => {
           console.log(`WeFitterSamsung error: ${event.error}`);
+
+          // `error` can be checked to override specific messages
+          // `forUser` boolean indicates the error requires user interaction
+          if (event.forUser) {
+            Alert.alert('', event.error, [
+              {
+                text: 'OK',
+                onPress: () => {
+                  // `tryToResolveError` will guide the user on fixing certain errors
+                  // for example:
+                  // - link to the app store to install or update Samsung Health
+                  // - open Samsung Health to accept privacy policy
+                  // - open Settings when Samsung Health needs to be enabled
+                  WeFitterSamsung.tryToResolveError(event.error);
+                },
+              },
+            ]);
+          }
         }
       );
 
