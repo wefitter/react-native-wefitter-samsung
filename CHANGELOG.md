@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.0
+
+Added `startDate` to `configure`
+
+Added the following datatypes:
+
+- Blood glucose
+- Blood pressure
+- Body fat
+- Body temperature
+- Oxygen saturation
+
 ## 1.0.0
 
 Error handling has been refactored

@@ -38,6 +38,7 @@ type WeFitterSamsungType = {
   configure(config: {
     token: string;
     apiUrl: string;
+    startDate?: string;
     notificationTitle?: string;
     notificationText?: string;
     notificationIcon?: string;

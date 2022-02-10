@@ -4,6 +4,8 @@ import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.wefitter.shealth.WeFitterSHealth
 import com.wefitter.shealth.WeFitterSHealthError
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
@@ -47,7 +49,8 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
       }
     }
     val notificationConfig = parseNotificationConfig(config)
-    weFitter.configure(token, apiUrl, statusListener, notificationConfig)
+    val startDate = parseStartDate(config)
+    weFitter.configure(token, apiUrl, statusListener, notificationConfig, startDate)
   }
 
   @ReactMethod
@@ -88,6 +91,16 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
       config.getString("notificationChannelId")?.let { channelId = it }
       config.getString("notificationChannelName")?.let { channelName = it }
     }
+  }
+
+  private fun parseStartDate(config: ReadableMap): Date? {
+    val startDateString = config.getString("startDate")
+    if (startDateString != null) {
+      val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+      sdf.timeZone = TimeZone.getTimeZone("UTC")
+      return sdf.parse(startDateString)
+    }
+    return null
   }
 
   private fun getResourceId(resourceName: String): Int {
