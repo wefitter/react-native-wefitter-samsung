@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+
+Added more detailed heart rate data to workouts
+
 ## 1.3.0
 
 Added daily detail samples per 10 minutes containing steps, distance and energy

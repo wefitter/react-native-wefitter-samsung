@@ -51,7 +51,7 @@ When the connection has been enabled for the first time it will fetch data of th
 ## Installation
 
 ```sh
-yarn add https://github.com/ThunderbyteAI/react-native-wefitter-samsung.git#v1.3.0
+yarn add https://github.com/ThunderbyteAI/react-native-wefitter-samsung.git#v1.4.0
 ```
 
 ## Usage
