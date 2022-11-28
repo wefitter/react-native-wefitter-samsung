@@ -126,9 +126,8 @@ dependencies {
 
   implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
   implementation "androidx.security:security-crypto:1.0.0"
-  implementation "androidx.work:work-runtime-ktx:2.5.0"
-  implementation "androidx.room:room-runtime:2.3.0"
-  implementation "com.github.PhilJay:JWT:1.1.5"
-  implementation "com.google.code.gson:gson:2.8.7"
-  implementation "com.squareup.okhttp3:okhttp:3.12.12"
+  implementation "androidx.work:work-runtime-ktx:2.7.1"
+  implementation "com.github.PhilJay:JWT:1.2.6"
+  implementation "com.google.code.gson:gson:2.8.9"
+  implementation "com.squareup.okhttp3:okhttp:4.9.2"
 }
