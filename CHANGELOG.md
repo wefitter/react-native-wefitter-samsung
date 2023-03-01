@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.1
+
+Changed default start date from 7 to 20 days back
+
+Fixed sleep data check
+
 ## 1.5.0
 
 Updated dependencies
