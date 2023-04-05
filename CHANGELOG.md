@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.0.0
+
+Updated dependencies
+
+Added "Version" header to ingest call
+
+**BREAKING CHANGE**
+
+- Changed `implementation` to `compileOnly` for direct local .aar dependencies due to changes in the Android Gradle Plugin.
+
+From now on the `.aar` dependencies should be manually added to the `android/apps/libs` folder in your app project and the following to your `app/build.gradle`:
+
+```
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.aar'])
+}
+```
+
+You can find the necessary files [here](https://github.com/wefitter/react-native-wefitter-samsung/tree/v2.0.0/android/libs). Make sure you select the same version tag you are using in your app before downloading to prevent incompatibility issues.
+
 ## 1.5.1
 
 Changed default start date from 7 to 20 days back

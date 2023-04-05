@@ -1,4 +1,4 @@
-package com.reactnativewefittersamsung
+package com.wefittersamsung
 
 import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
