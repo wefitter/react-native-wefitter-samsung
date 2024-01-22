@@ -1,6 +1,6 @@
 {
   "name": "react-native-wefitter-samsung",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "React Native library for WeFitter and Samsung Health",
   "private": true,
   "main": "lib/commonjs/index",
@@ -38,7 +38,7 @@
     "react-native",
     "android"
   ],
-  "repository": "https://github.com/ThunderbyteAI/react-native-wefitter-samsung",
+  "repository": "https://github.com/wefitter/react-native-wefitter-samsung",
   "author": "WeFitter <hello@wefitter.com> (https://github.com/wefitter)",
   "license": "UNLICENSED",
   "bugs": {
