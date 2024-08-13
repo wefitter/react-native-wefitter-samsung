@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0
+
+Android 14 support
+SDK 34 added
+Upgraded several packages
+
 ## 2.0.2
 
 Moved some processing to different threads
