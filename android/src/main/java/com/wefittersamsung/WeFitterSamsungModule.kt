@@ -1,5 +1,6 @@
 package com.wefittersamsung
 
+import androidx.appcompat.app.AppCompatActivity
 import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.wefitter.shealth.WeFitterSHealth
@@ -10,7 +11,7 @@ import java.util.*
 class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
 
-  private val weFitter by lazy { WeFitterSHealth(currentActivity!!) }
+  private val weFitter by lazy { WeFitterSHealth(currentActivity!! as AppCompatActivity) }
   private val errors = mutableMapOf<WeFitterSHealthError.Reason, WeFitterSHealthError>()
 
   override fun getName(): String {
@@ -44,7 +45,7 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
           "onErrorWeFitterSamsung",
           Arguments.createMap().apply {
             putString("error", error.reason.message)
-            putBoolean("forUser", error.reason.forUser)
+            //putBoolean("forUser", error.reason.forUser)
           })
       }
     }

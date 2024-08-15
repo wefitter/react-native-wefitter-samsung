@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
+apply plugin: "org.jetbrains.kotlin.android"
 
 import com.android.build.OutputFile
 
@@ -95,7 +96,7 @@ android {
 
     namespace "com.wefittersamsungexample"
     defaultConfig {
-        applicationId "com.wefittersamsungexample"
+        applicationId "com.wefitter.app.prod"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
