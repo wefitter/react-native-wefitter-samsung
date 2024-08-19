@@ -1,9 +1,19 @@
 # Changelog
 
+## 2.1.1
+
+Improved Android 14 support
+
+Foreground Service added for health data collection
+
+Upgraded several packages
+
 ## 2.1.0
 
 Android 14 support
+
 SDK 34 added
+
 Upgraded several packages
 
 ## 2.0.2
