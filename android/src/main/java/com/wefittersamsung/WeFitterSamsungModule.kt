@@ -7,6 +7,7 @@ import com.wefitter.shealth.WeFitterSHealth
 import com.wefitter.shealth.WeFitterSHealthError
 import java.text.SimpleDateFormat
 import java.util.*
+import android.util.Log
 
 class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
@@ -51,7 +52,11 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
     }
     val notificationConfig = parseNotificationConfig(config)
     val startDate = parseStartDate(config)
-    weFitter.configure(token, apiUrl, statusListener, notificationConfig, startDate)
+    val appPermissions = parseAppPermission(config)
+
+    Log.e("DEBUG", "$appPermissions")
+
+    weFitter.configure(token, apiUrl, statusListener, notificationConfig, startDate, appPermissions)
   }
 
   @ReactMethod
@@ -115,6 +120,15 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
       resourceId = resources.getIdentifier(resourceName, "raw", packageName)
     }
     return resourceId
+  }
+
+  private fun parseAppPermission(config: ReadableMap): Set<String> {
+    val appPermsString: String? = config.getString("myAppPermissions")
+    if (appPermsString != null) {
+      val appPerms: Set<String> = appPermsString.split(',').toSet()
+      return appPerms
+    }
+    return emptySet()
   }
 
   private fun sendEvent(reactContext: ReactContext, eventName: String, params: WritableMap?) {

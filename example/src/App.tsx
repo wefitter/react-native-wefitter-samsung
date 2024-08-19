@@ -17,6 +17,22 @@ import WeFitterSamsung, {
 export default function App() {
   const [connected, setConnected] = useState<boolean>(false);
 
+  const prefix = 'com.samsung.health';
+  const myAppPermissions: string[] = [
+    `com.samsung.shealth.step_daily_trend`,
+    `${prefix}.heart_rate`,
+    `${prefix}.height`,
+    `${prefix}.weight`,
+    `${prefix}.sleep_stage`,
+    `${prefix}.exercise`,
+    //"$prefix.blood_glucose",
+    //"$prefix.blood_pressure",
+    //"$prefix.body_fat",
+    //"$prefix.body_temperature",
+    //"$prefix.oxygen_saturation",'
+  ];
+  const myAppPermissionsString = myAppPermissions.join(',');
+
   useEffect(() => {
     if (Platform.OS === 'android') {
       // create native event emitter and event listeners to handle status updates
@@ -60,7 +76,8 @@ export default function App() {
 
       // create config
       const config = {
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBY3RpZnkgVGVzdCIsImFwcCI6Ijg3ZjAwNjc1LTZmNWMtNDJkMS05MGU2LTM2NGM1NzliMGMwYiIsImlhdCI6MTcyMzU0Njg2OSwiaWQiOiIzMzkyM2U5MS04ODkwLTQ5ZjAtYTVkYy1iZjg5MmQ0ODJhMDgifQ.DkO60qjJJU0azybVMD4NMGtnZ3qSST3ioZeYTD4d5C4', // required
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBY3RpZnkgVGVzdCIsImFwcCI6Ijg3ZjAwNjc1LTZmNWMtNDJkMS05MGU2LTM2NGM1NzliMGMwYiIsImlhdCI6MTcyMzU0Njg2OSwiaWQiOiIzMzkyM2U5MS04ODkwLTQ5ZjAtYTVkYy1iZjg5MmQ0ODJhMDgifQ.DkO60qjJJU0azybVMD4NMGtnZ3qSST3ioZeYTD4d5C4', // required
         apiUrl: 'https://api.wefitter.com/api/', // required, the url should be base without `v1/ingest/` as the library will append this. For example: `https://api.wefitter.com/api/`
         //startDate: 'CUSTOM_START_DATE', // optional with format `yyyy-MM-dd`, by default data of the past 7 days will be uploaded
         //notificationTitle: 'CUSTOM_TITLE', // optional
@@ -68,6 +85,7 @@ export default function App() {
         //notificationIcon: 'CUSTOM_ICON', // optional, e.g. `ic_notification` placed in either drawable, mipmap or raw
         //notificationChannelId: 'CUSTOM_CHANNEL_ID', // optional
         //notificationChannelName: 'CUSTOM_CHANNEL_NAME', // optional
+        myAppPermissions: myAppPermissionsString,
       };
 
       // configure WeFitterSamsung
