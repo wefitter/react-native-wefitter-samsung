@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.2
+
+Bugfixes
+
+Custom notification handling support added
+
 ## 2.1.1
 
 Improved Android 14 support

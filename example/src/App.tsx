@@ -78,12 +78,12 @@ export default function App() {
 
       // create config
       const config = {
-        token: 'YOUR_TOKEN', // required
+        token: 'CUSTOM_START_DATE', // required
         apiUrl: 'YOUR_API_URL', // required, the url should be base without `v1/ingest/` as the library will append this. For example: `https://api.wefitter.com/api/`
-        startDate: 'CUSTOM_START_DATE', // optional with format `yyyy-MM-dd`, by default data of the past 7 days will be uploaded
+        //startDate: 'CUSTOM_START_DATE', // optional with format `yyyy-MM-dd`, by default data of the past 7 days will be uploaded
         notificationTitle: 'CUSTOM_TITLE', // optional
         notificationText: 'CUSTOM_TEXT', // optional
-        notificationIcon: 'CUSTOM_ICON', // optional, e.g. `ic_notification` placed in either drawable, mipmap or raw
+        notificationIcon: 'ic_notification', // optional, e.g. `ic_notification` placed in either drawable, mipmap or raw
         notificationChannelId: 'CUSTOM_CHANNEL_ID', // optional
         notificationChannelName: 'CUSTOM_CHANNEL_NAME', // optional
         myAppPermissions: myAppPermissionsString,
