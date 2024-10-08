@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
   private val healthConnectPermissionRequest = this.registerForActivityResult(
     ActivityResultContracts.RequestMultiplePermissions()
   ) { permissions ->
-    Log.i("DEBUG", "permissions $permissions")
+    Log.i(TAG, "permissions $permissions")
 
     when {
       permissions.getOrDefault(android.Manifest.permission.ACTIVITY_RECOGNITION, false) -> {
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     val intent = Intent(this, MainRNActivity::class.java)
     val callingActivityName = MainActivity::class.java.simpleName
-    Log.i("DEBUG", "callingActivityName $callingActivityName")
+    Log.i(TAG, "callingActivityName $callingActivityName")
     intent.putExtra("CALLING_ACTIVITY", callingActivityName)
     startActivity(intent)
 
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
   @RequiresApi(Build.VERSION_CODES.TIRAMISU)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    Log.d("DEBUG", "Overridden OnCreate $savedInstanceState")
+    Log.d(TAG, "Overridden OnCreate $savedInstanceState  $this")
 
     // Apparently needed for Android 13 behaviour calling OnCreate twice
     if (savedInstanceState == null) {
@@ -62,8 +62,33 @@ class MainActivity : AppCompatActivity() {
           android.Manifest.permission.POST_NOTIFICATIONS
         )
       )
-      Log.d("DEBUG", "After healthConnectPermissionRequest")
+      Log.d(TAG, "After healthConnectPermissionRequest")
     }
-    Log.d("DEBUG", "OnCreate finished")
+    Log.d(TAG, "OnCreate finished  $this")
   }
+
+  override fun onStop() {
+    Log.d(TAG, "Overridden onStop $this")
+    super.onStop()
+  }
+
+  override fun onRestart() {
+    Log.d(TAG, "Overridden onRestart $this")
+    super.onRestart()
+  }
+
+  override fun onResume() {
+    Log.d(TAG, "Overridden onResume $this")
+    super.onResume()
+  }
+
+  override fun onDestroy() {
+    Log.d(TAG, "Overridden onDestroy $this")
+    super.onDestroy()
+  }
+
+  companion object {
+    const val TAG = "MainActivity"
+  }
+
 }

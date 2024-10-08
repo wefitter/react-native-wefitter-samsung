@@ -1,13 +1,16 @@
 package com.wefittersamsung
 
+import android.content.Intent
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.wefitter.shealth.WeFitterSHealth
 import com.wefitter.shealth.WeFitterSHealthError
 import java.text.SimpleDateFormat
 import java.util.*
-import android.util.Log
+
 
 class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {

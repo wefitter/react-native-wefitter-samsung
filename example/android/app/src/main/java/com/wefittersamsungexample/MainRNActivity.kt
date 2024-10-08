@@ -19,13 +19,13 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
-      Log.d("DEBUG", "Overridden")
+      Log.d(TAG, "Overridden")
       val intent = getIntent()
       val callingActivity = intent.getStringExtra("CALLING_ACTIVITY")
-      Log.d("DEBUG", "MainActivity2-onCreate $callingActivity")
+      Log.d(TAG, "MainActivity2-onCreate $callingActivity")
       // val callerClass = Class.forName(callingActivity!!, false, classLoader)
       // Log.d("DEBUG", "MainActivity2-onCreate $callerClass")
-      Log.d("DEBUG", "MainActivity2-onCreate $intent")
+      Log.d(TAG, "MainActivity2-onCreate $intent")
     }
 
       /**
@@ -41,11 +41,36 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
      * (aka React 18) with two boolean flags.
      */
     override fun createReactActivityDelegate(): ReactActivityDelegate {
-      Log.d("DEBUG", "createReactActivityDelegate")
+      Log.d(TAG, "createReactActivityDelegate")
         return DefaultReactActivityDelegate(
             this,
           mainComponentName,  // If you opted-in for the New Architecture, we enable the Fabric Renderer.
             fabricEnabled
         )
     }
-}
+
+    override fun onStop() {
+      Log.d(TAG, "Overridden onStop")
+      super.onStop()
+    }
+
+    override fun onRestart() {
+      Log.d(TAG, "Overridden onStop")
+      super.onRestart()
+    }
+
+    override fun onResume() {
+      Log.d(TAG, "Overridden onResume")
+      super.onResume()
+    }
+
+    override fun onDestroy() {
+      Log.d(TAG, "Overridden onDestroy")
+      super.onDestroy()
+    }
+
+    companion object {
+      const val TAG = "MainRNActivity"
+    }
+
+  }
