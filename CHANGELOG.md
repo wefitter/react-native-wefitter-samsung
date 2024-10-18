@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.2.0
+
+Moved starting FGS outside SDK
 
 ## 2.1.3
 

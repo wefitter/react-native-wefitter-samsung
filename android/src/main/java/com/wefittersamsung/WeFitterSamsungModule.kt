@@ -1,9 +1,7 @@
 package com.wefittersamsung
 
-import android.content.Intent
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.wefitter.shealth.WeFitterSHealth
@@ -15,7 +13,8 @@ import java.util.*
 class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
 
-  private val weFitter by lazy { WeFitterSHealth(currentActivity!! as AppCompatActivity) }
+  // private val weFitter by lazy { WeFitterSHealth(currentActivity!! as AppCompatActivity) }
+  private lateinit var weFitter: WeFitterSHealth
   private val errors = mutableMapOf<WeFitterSHealthError.Reason, WeFitterSHealthError>()
 
   override fun getName(): String {
@@ -24,6 +23,8 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
 
   @ReactMethod
   fun configure(config: ReadableMap) {
+    Log.d("DEBUG", "WeFitterSamsungModule - configure $currentActivity")
+    weFitter = WeFitterSHealth(currentActivity!! as AppCompatActivity)
     val token = config.getString("token") ?: ""
     val apiUrl = config.getString("apiUrl") ?: ""
     val statusListener = object : WeFitterSHealth.StatusListener {
@@ -57,7 +58,7 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
     val startDate = parseStartDate(config)
     val appPermissions = parseAppPermission(config)
 
-    Log.e("DEBUG", "$appPermissions")
+    Log.d("DEBUG", "$appPermissions $weFitter")
 
     weFitter.configure(token, apiUrl, statusListener, notificationConfig, startDate, appPermissions)
   }

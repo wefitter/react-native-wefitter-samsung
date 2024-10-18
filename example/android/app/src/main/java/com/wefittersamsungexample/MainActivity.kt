@@ -5,21 +5,41 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import android.Manifest
+import android.app.ActivityManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.react.ReactActivity
-import com.facebook.react.ReactActivityDelegate
-import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
-import com.facebook.react.defaults.DefaultReactActivityDelegate
-import com.wefittersamsungexample.MainRNActivity
+import com.wefitter.shealth.service.SamsungHealthForegroundService
+import com.google.gson.Gson
+
+
+class NotificationConfig(
+  var title: String = "WeFitter for Samsung Health",
+  var text: String = "Synchronizing Samsung Health",
+  var iconResourceId: Int = com.wefitter.shealth.R.mipmap.ic_notification,
+  var channelId: String = "WeFitter for Samsung Health",
+  var channelName: String = "WeFitter for Samsung Health",
+)
 
 
 class MainActivity : AppCompatActivity() {
 
   private var ACTIVITY_RECOGNITION: Boolean = false
   private var POST_NOTIFICATIONS: Boolean = false
+
+  private var fgRunning: Boolean = false
+
+  fun foregroundServiceRunning(): Boolean {
+    val activityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+    for (service in activityManager.getRunningServices(Int.MAX_VALUE)) {
+      val serviceName = "com.wefitter.shealth.service.SamsungHealthForegroundService"
+      Log.d(TAG, "serviceName $serviceName")
+      if (serviceName == service.service.className) {
+        return true
+      }
+    }
+    return false
+  }
 
   private val healthConnectPermissionRequest = this.registerForActivityResult(
     ActivityResultContracts.RequestMultiplePermissions()
@@ -29,6 +49,8 @@ class MainActivity : AppCompatActivity() {
     when {
       permissions.getOrDefault(android.Manifest.permission.ACTIVITY_RECOGNITION, false) -> {
         ACTIVITY_RECOGNITION = true
+        Log.d(TAG, "Start FGS - FG running = $fgRunning")
+        if(!fgRunning) startFGS()
       }
 
       permissions.getOrDefault(android.Manifest.permission.POST_NOTIFICATIONS, false) -> {
@@ -42,17 +64,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     val intent = Intent(this, MainRNActivity::class.java)
-    val callingActivityName = MainActivity::class.java.simpleName
-    Log.i(TAG, "callingActivityName $callingActivityName")
-    intent.putExtra("CALLING_ACTIVITY", callingActivityName)
+    val fgRunningString = if (fgRunning) "TRUE" else "FALSE"
+    intent.putExtra("FOREGROUND_RUNNING", fgRunningString)
     startActivity(intent)
-
   }
 
   @RequiresApi(Build.VERSION_CODES.TIRAMISU)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    Log.d(TAG, "Overridden OnCreate $savedInstanceState  $this")
+    fgRunning = foregroundServiceRunning()
+    Log.d(TAG, "Overridden OnCreate $savedInstanceState $this fgRunning: $fgRunning")
 
     // Apparently needed for Android 13 behaviour calling OnCreate twice
     if (savedInstanceState == null) {
@@ -85,6 +106,15 @@ class MainActivity : AppCompatActivity() {
   override fun onDestroy() {
     Log.d(TAG, "Overridden onDestroy $this")
     super.onDestroy()
+  }
+
+  fun startFGS() {
+    Log.d(TAG, "MainActivity - onStart")
+    val fgIntent = Intent(this, SamsungHealthForegroundService::class.java)
+    val notificationConfig = NotificationConfig()
+    val jsonString: String = Gson().toJson(notificationConfig)
+    fgIntent.putExtra("notification", jsonString)
+    startForegroundService(fgIntent)
   }
 
   companion object {
