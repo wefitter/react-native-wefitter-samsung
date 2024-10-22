@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+Remove toast messages from FGS
+
 ## 2.2.0
 
 Moved starting FGS outside SDK
