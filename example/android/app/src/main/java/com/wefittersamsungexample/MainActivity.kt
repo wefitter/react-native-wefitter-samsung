@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
     Log.d(TAG, "Overridden OnCreate $savedInstanceState $this fgRunning: $fgRunning")
 
     // Apparently needed for Android 13 behaviour calling OnCreate twice
+    /*
     if (savedInstanceState == null) {
       healthConnectPermissionRequest.launch(
         arrayOf(
@@ -85,7 +86,11 @@ class MainActivity : AppCompatActivity() {
       )
       Log.d(TAG, "After healthConnectPermissionRequest")
     }
-    Log.d(TAG, "OnCreate finished  $this")
+     */
+    val intent = Intent(this, MainRNActivity::class.java)
+    val fgRunningString = if (fgRunning) "TRUE" else "FALSE"
+    intent.putExtra("FOREGROUND_RUNNING", fgRunningString)
+    startActivity(intent)
   }
 
   override fun onStop() {
