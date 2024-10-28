@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
       permissions.getOrDefault(android.Manifest.permission.ACTIVITY_RECOGNITION, false) -> {
         ACTIVITY_RECOGNITION = true
         Log.d(TAG, "Start FGS - FG running = $fgRunning")
-        if(!fgRunning) startFGS()
+        // if(!fgRunning) startFGS()
       }
 
       permissions.getOrDefault(android.Manifest.permission.POST_NOTIFICATIONS, false) -> {

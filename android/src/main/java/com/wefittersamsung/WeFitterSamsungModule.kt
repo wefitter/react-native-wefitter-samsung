@@ -58,7 +58,7 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
     val startDate = parseStartDate(config)
     val appPermissions = parseAppPermission(config)
 
-    Log.d("DEBUG", "$appPermissions $weFitter")
+    // Log.d("DEBUG", "$appPermissions $weFitter")
 
     weFitter.configure(token, apiUrl, statusListener, notificationConfig, startDate, appPermissions)
   }
