@@ -78,8 +78,8 @@ export default function App() {
 
       // create config
       const config = {
-        token: 'CUSTOM_START_DATE', // required
-        apiUrl: 'YOUR_API_URL', // required, the url should be base without `v1/ingest/` as the library will append this. For example: `https://api.wefitter.com/api/`
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJUZXN0MSIsImFwcCI6IjI0MDBkYjdlLWUyOGUtNGU2MC1iZDIzLTgwN2JkMjNmYjQ1OSIsImlhdCI6MTcyNjYzNzQxNSwiaWQiOiIwODQwNzkxYS0yMzMxLTQ1NzQtYmQ4OS0yOTA3Y2YzNTkwNzIifQ.JBqJ7BQKOmcamnITCvqclwvT5IZZ1bRX6utV85ZimBA', // required, WeFitter API profile bearer token
+        apiUrl: 'https://test1.wefitter.com/api/', // optional, only use if you want to use your backend as a proxy and forward all API calls to the WeFitter API. Default: `https://api.wefitter.com/api/`
         //startDate: 'CUSTOM_START_DATE', // optional with format `yyyy-MM-dd`, by default data of the past 7 days will be uploaded
         notificationTitle: 'CUSTOM_TITLE', // optional
         notificationText: 'CUSTOM_TEXT', // optional
@@ -87,6 +87,7 @@ export default function App() {
         notificationChannelId: 'CUSTOM_CHANNEL_ID', // optional
         notificationChannelName: 'CUSTOM_CHANNEL_NAME', // optional
         myAppPermissions: myAppPermissionsString,
+        configFGSPermissions: 'false',
       };
 
       // configure WeFitterSamsung

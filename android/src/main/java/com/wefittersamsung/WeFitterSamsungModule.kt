@@ -57,11 +57,12 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
     val notificationConfig = parseNotificationConfig(config)
     val startDate = parseStartDate(config)
     val appPermissions = parseAppPermission(config)
+    val configFGSPermissions = parseConfigFGSPermissions(config)
 
     // Log.d("DEBUG", "$appPermissions $weFitter")
 
-    weFitter.configure(token, apiUrl, statusListener, notificationConfig, startDate, appPermissions)
-  }
+    weFitter.configure(token, apiUrl, statusListener, notificationConfig, startDate, appPermissions, configFGSPermissions)
+    }
 
   @ReactMethod
   fun connect() {
@@ -126,6 +127,16 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
     return resourceId
   }
 
+  private fun parseConfigFGSPermissions(config: ReadableMap): Boolean {
+    val boolString: String? = config.getString("configFGSPermissions")
+    if (boolString != null) {
+      var bool: Boolean = true
+      if (boolString == "false") {bool = false}
+      return bool
+    }
+    return true
+  }
+
   private fun parseAppPermission(config: ReadableMap): Set<String> {
     val appPermsString: String? = config.getString("myAppPermissions")
     if (appPermsString != null) {
@@ -134,6 +145,7 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
     }
     return emptySet()
   }
+
 
   private fun sendEvent(reactContext: ReactContext, eventName: String, params: WritableMap?) {
     reactContext
