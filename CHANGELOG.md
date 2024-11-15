@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.6
+
+Various fixes and version bump
+
 ## 2.2.1
 
 Remove toast messages from FGS
