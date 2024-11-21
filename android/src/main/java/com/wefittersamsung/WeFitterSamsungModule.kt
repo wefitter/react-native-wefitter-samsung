@@ -50,7 +50,7 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
           "onErrorWeFitterSamsung",
           Arguments.createMap().apply {
             putString("error", error.reason.message)
-            //putBoolean("forUser", error.reason.forUser)
+            putBoolean("forUser", error.reason.resolvable)
           })
       }
     }
