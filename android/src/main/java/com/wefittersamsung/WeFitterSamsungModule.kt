@@ -23,8 +23,8 @@ class WeFitterSamsungModule(private val reactContext: ReactApplicationContext) :
 
   @ReactMethod
   fun configure(config: ReadableMap) {
-    Log.d("DEBUG", "WeFitterSamsungModule - configure $currentActivity")
-    weFitter = WeFitterSHealth(currentActivity!! as AppCompatActivity)
+    Log.d("DEBUG", "WeFitterSamsungModule - configure ${reactContext.currentActivity}")
+    weFitter = WeFitterSHealth(reactContext.currentActivity!! as AppCompatActivity)
     val token = config.getString("token") ?: ""
     val apiUrl = config.getString("apiUrl") ?: ""
     val statusListener = object : WeFitterSHealth.StatusListener {
