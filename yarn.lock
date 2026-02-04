@@ -5808,17 +5808,6 @@ react-native-safe-area-context@^5.5.2:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-5.6.2.tgz#283e006f5b434fb247fcb4be0971ad7473d5c560"
   integrity sha512-4XGqMNj5qjUTYywJqpdWZ9IG8jgkS3h06sfVjfw5yZQZfWnRFXczi0GnYyFyCc2EBps/qFmoCH8fez//WumdVg==
 
-"react-native-wefitter-samsung@file:.":
-  version "2.1.2"
-  dependencies:
-    "@react-native/new-app-screen" "0.81.1"
-    babel-plugin-module-resolver "^5.0.2"
-    react "19.1.0"
-    react-native "0.81.1"
-    react-native-builder-bob "^0.40.17"
-    react-native-safe-area-context "^5.5.2"
-    react-native-wefitter-samsung "file:../../../Library/Caches/Yarn/v6/npm-react-native-wefitter-samsung-2.1.2-dad0b367-af8d-4e09-ba9b-e11e5488cf95-1770198443733/node_modules/react-native-wefitter-samsung"
-
 react-native@0.81.1:
   version "0.81.1"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.81.1.tgz#0825cde0cc00d569cbec7d2fa1abd38a66885250"
